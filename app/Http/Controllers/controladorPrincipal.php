@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+//use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Auth;
+use App\User;
 
 class controladorPrincipal extends Controller
 {
@@ -11,11 +14,36 @@ class controladorPrincipal extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function login(Request $request)
     {
-        $nickname = $request -> input("nickname");
-        $password = $request -> input("pssw");
-        return (string) $request;
+        $credentials = $request->only('name', 'password');
+        if (Auth::attempt($credentials)) {
+            $rand_part = str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789".uniqid());
+
+            $setToken = User::whereName($credentials['name'])->first();
+            $setToken->token = $rand_part;
+            $setToken->save();
+            
+            $getToken = User::whereName($credentials['name'])->select('token')->first();
+            return $getToken;
+        }
+        return "No entra";
+    }
+
+    public function logout(Request $request)
+    {
+        $credentials = $request->only('name', 'password');
+        if (Auth::attempt($credentials)) {
+            $rand_part = str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789".uniqid());
+
+            $setToken = User::whereName($credentials['name'])->first();
+            $setToken->token = $rand_part;
+            $setToken->save();
+            
+            $getToken = User::whereName($credentials['name'])->select('token')->first();
+            return $getToken;
+        }
+        return "No entra";
     }
 
     /**

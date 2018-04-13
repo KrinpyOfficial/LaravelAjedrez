@@ -17,4 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post("/login","controladorPrincipal@index");
+Route::post("/login","controladorPrincipal@login");
+
+Route::post("/logout","controladorPrincipal@logout");

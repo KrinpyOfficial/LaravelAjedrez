@@ -13,7 +13,9 @@ class Fichas extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('fichas', function (Blueprint $table) {
+            $table->increments('id');
+        });
     }
 
     /**

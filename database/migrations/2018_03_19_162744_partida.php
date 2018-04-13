@@ -13,7 +13,9 @@ class Partida extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('partida', function (Blueprint $table) {
+            $table->increments('id');
+        });
     }
 
     /**
